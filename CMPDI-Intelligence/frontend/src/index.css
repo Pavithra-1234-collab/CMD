@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --c-paper: 250 250 249; --c-surface: 255 255 255; --c-ink: 28 25 23;
+  --c-seam: 231 229 228; --c-seamdark: 214 211 211;
+  --c-coal: 217 119 6; --c-coalsoft: 254 243 226; --c-coalline: 243 221 181;
+  --c-muted0: 214 211 211; --c-muted1: 168 162 158; --c-muted2: 120 113 108;
+  --c-muted3: 87 83 78; --c-muted4: 68 64 60;
+  --c-ok-bg: 236 253 245; --c-ok-line: 167 243 208; --c-ok-solid: 5 150 105;
+  --c-ok-text: 4 120 87; --c-ok-text2: 6 95 70;
+  --c-bad-bg: 254 242 242; --c-bad-line: 254 202 202; --c-bad-line2: 252 165 165;
+  --c-bad-solid: 220 38 38; --c-bad-text: 185 28 28;
+  --c-warn-bg: 254 243 199; --c-warn-text: 120 53 15;
+  /* sidebar: fixed charcoal, never flips */
+  --s-bg: 24 21 19; --s-hi: 38 34 31; --s-text: 245 243 241;
+  --s-mute: 120 113 108; --s-line: 44 40 36;
+}
+.dark {
+  --c-paper: 18 16 14; --c-surface: 31 28 25; --c-ink: 231 229 228;
+  --c-seam: 57 52 47; --c-seamdark: 82 75 68;
+  --c-coal: 234 138 12; --c-coalsoft: 55 40 15; --c-coalline: 110 78 28;
+  --c-muted0: 96 90 84; --c-muted1: 154 147 143; --c-muted2: 145 138 134;
+  --c-muted3: 168 162 158; --c-muted4: 196 191 188;
+  --c-ok-bg: 12 46 34; --c-ok-line: 27 84 61; --c-ok-solid: 16 185 129;
+  --c-ok-text: 110 231 183; --c-ok-text2: 134 239 200;
+  --c-bad-bg: 53 20 20; --c-bad-line: 114 38 38; --c-bad-line2: 142 48 48;
+  --c-bad-solid: 225 70 70; --c-bad-text: 248 113 113;
+  --c-warn-bg: 62 44 12; --c-warn-text: 252 211 77;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+::selection { background: rgb(var(--c-coal) / 0.22); }
+
+/* Slightly smoother text rendering */
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* ─── Animations ─────────────────────────────────────────────────────────────── */
+/* CTA amber breathing glow (used in Cta.jsx on the primary button) */
+@keyframes cta-breathe {
+  0%, 100% { box-shadow: 0 4px 18px rgb(var(--c-coal) / 0.3); }
+  50%       { box-shadow: 0 6px 32px rgb(var(--c-coal) / 0.6); }
+}
+
+/* ─── Sidebar ─────────────────────────────────────────────────────────────────── */
+/* Collapsed state: hide labels via max-width + opacity, keep icons centered */
+.sb-label {
+  transition: opacity 0.2s ease, max-width 0.25s cubic-bezier(0.16,1,0.3,1);
+  max-width: 180px;
+  overflow: hidden;
+}
+.sb-collapsed .sb-label { opacity: 0; max-width: 0; }
+.sb-collapsed .sb-hide  { opacity: 0; pointer-events: none; }
+.sb-hide { transition: opacity 0.2s ease; }
+
+/* ─── Upload dropzone ─────────────────────────────────────────────────────────── */
+.dropzone     { transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; }
+.dropzone-hot { border-color: rgb(var(--c-coal)) !important; background: rgb(var(--c-coalsoft) / 0.6); transform: scale(1.004); }
+
+/* ─── Theme transition ─────────────────────────────────────────────────────────── */
+/* Brief window while switching so panels glide instead of jump */
+html.theming *,
+html.theming *::before,
+html.theming *::after {
+  transition:
+    background-color 0.32s ease,
+    border-color     0.32s ease,
+    color            0.32s ease,
+    fill             0.32s ease,
+    stroke           0.32s ease !important;
+}
+
+/* ─── Accessibility ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:   0.01ms !important;
+    transition-duration:  0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

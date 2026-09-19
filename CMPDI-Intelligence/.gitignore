@@ -1,0 +1,20 @@
+.venv/
+data/
+__pycache__/
+*.pyc
+.pytest_cache/
+.agents/
+cmpdi_intel.egg-info/
+*.egg-info/
+samples/
+*.deb
+
+# local configuration with secrets - never commit
+.env
+
+# local browser-tooling downloads
+*.deb
+
+# react frontend
+frontend/node_modules/
+frontend/dist/
